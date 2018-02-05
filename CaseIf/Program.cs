@@ -11,6 +11,14 @@ namespace CaseIf
         private static readonly List<Developer> DeveloperList = StaticData.DeveloperList;
         private static EmployeeService _employeeService;
 
+        private static readonly Dictionary<DeveloperType, IEmployeeService>  EmployeeMapping = new Dictionary<DeveloperType, IEmployeeService>
+        {
+            { DeveloperType.Senior, new EmpSeniorService() },
+            { DeveloperType.Junior, new EmpJuniorService() },
+            { DeveloperType.Master, new EmpMasterService() },
+            { DeveloperType.Specialist, new EmpSpecialistService() }
+        };
+
         private static void Main()
         {
             var builder = new ContainerBuilder();
@@ -56,23 +64,9 @@ namespace CaseIf
             //I think here is problem #1
             //TODO: There must be something wrong. How can I change this assignee that employee service understand?
 
-            var wage = string.Empty;
 
-            switch (developer.Title)
-            {
-                case DeveloperType.Senior:
-                    wage = _employeeService.GetWage(new EmpSeniorService());
-                    break;
-                case DeveloperType.Junior:
-                    wage = _employeeService.GetWage(new EmpJuniorService());
-                    break;
-                case DeveloperType.Master:
-                    wage = _employeeService.GetWage(new EmpMasterService());
-                    break;
-                case DeveloperType.Specialist:
-                    wage = _employeeService.GetWage(new EmpSpecialistService());
-                    break;
-            }
+            var service = EmployeeMapping[developer.Title];
+            var wage = _employeeService.GetWage(service);
 
             Console.WriteLine($"Type {developer.Title}, Wage {wage}");
             Console.WriteLine("Press any key to continue.");

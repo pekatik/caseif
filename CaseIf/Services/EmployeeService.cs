@@ -13,7 +13,7 @@
             _authService = authService;
             _wageService = wageService;
         }
-        public string GetWage(object obj)
+        public string GetWage(IEmployeeService obj)
         {
             #region fake authentication
 
@@ -33,26 +33,8 @@
 
             //I think here is problem #2
             //TODO: There must be something wrong. How could data come to simplify that code below?
-            if (obj is EmpSeniorService)
-            {
-                var service = (EmpSeniorService)obj;
-                wage = service.GetWage(_wageService, auth);
-            }
-            else if (obj is EmpJuniorService)
-            {
-                var service = (EmpJuniorService)obj;
-                wage = service.GetWage(_wageService, auth);
-            }
-            else if (obj is EmpMasterService)
-            {
-                var service = (EmpMasterService)obj;
-                wage = service.GetWage(_wageService, auth);
-            }
-            else if (obj is EmpSpecialistService)
-            {
-                var service = (EmpSpecialistService)obj;
-                wage = service.GetWage(_wageService, auth);
-            }
+
+            obj.GetWage(_wageService, auth);
 
             return wage;
         }

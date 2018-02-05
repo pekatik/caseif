@@ -1,6 +1,6 @@
 ﻿namespace CaseIf.Services
 {
-    public class EmpJuniorService
+    public class EmpJuniorService : IEmployeeService
     {
         public string GetWage(WageService wageService, string authCode)
         {
