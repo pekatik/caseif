@@ -28,13 +28,10 @@
 
             #endregion
 
-            string wage = string.Empty;
-
-
             //I think here is problem #2
             //TODO: There must be something wrong. How could data come to simplify that code below?
 
-            obj.GetWage(_wageService, auth);
+            string wage = obj.GetWage(_wageService, auth);
 
             return wage;
         }
